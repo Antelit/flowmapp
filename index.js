@@ -21,14 +21,18 @@ server.listen(SERVER_PORT, () => {
     console.info(`Server run on port: ${SERVER_PORT}.`);
 });
 
-let secondsSinceServerStarted = 0;
+let timerWork = 0;
+
 setInterval(() => {
-    secondsSinceServerStarted++;
-    io.emit('Stats', {Type: "Stats", data: {
-        secondOnStart:secondsSinceServerStarted, 
-        countVisuals: Visuals.size,
-        countClients: Clients.size}});
-}, 1000);
+    timerWork++;
+    io.emit('Stats', {Type: "Stats", 
+        data: {
+            secondOnStart: timerWork, 
+            countVisuals: Visuals.size,
+            countClients: Clients.size}
+        });
+    }, 1000
+);
 
 function ClientConnect(socket) {
     socket.on("disconnect", () => {
@@ -58,7 +62,7 @@ function ClientConnect(socket) {
         } else if (helloMsg.Type == 'Visual') {
             Visuals.add(socket);
         } else {
-            socket.emit("error", {errorMessage: "I'm don't who you! Send me Client or Visual on you type"});
+            socket.emit("error", {errorMessage: "I'm don't know who you! Send me Client or Visual on you type"});
         }
         AllMachine.add(socket);
     });
