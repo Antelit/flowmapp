@@ -4,16 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Visual position mouse client</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div id="cursorePosition">
+    <div class="content">
+        <div id="cursorePosition">
 
+        </div>
+        <div id="clients">
+            <div class="info">
+                <span> Time work: <span id="timeWork">  </span> </span><br>
+                <span> Visual: <span id='cnt_vis'>  </span> </span><br>
+                <span> Client: <span id='cnt_cli'>  </span> </span><br><br>
+            </div>
+        </div>
     </div>
+
     <script src="/socket.io/socket.io.js"></script>
-    <script defer src="client.js"></script>
+    <script defer src="visual.js"></script>
 </body>
 
 </html>

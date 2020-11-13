@@ -1,11 +1,12 @@
 .mainDiv {
     box-sizing: border-box;
-    height: 1000px;
-    width: 1000px;
+    height: 500px;
+    width: 500px;
     border: 1px solid red;
 }
 
 .circle {
+    box-sizing: border-box;
     position: relative;
     background-color: black;
     height: 5px;
@@ -23,12 +24,18 @@
 
 #cursorePosition {
     border: 1px solid red;
-    height: 1000px;
-    width: 1000px;
+    height: 500px;
+    width: 500px;
+    float: left;
 }
 
 .name {
     left: -80px;
     top: 10px;
     position: inherit;
+}
+#clients{
+    border: 1px solid green;
+    float: left;
+    margin-left: 15px;
 }

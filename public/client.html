@@ -4,13 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello</title>
+    <title>Client</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <H1> HELLO</H1>
+    <span>Your uniq ID: <b><span id="uniq"></span></b></span> <br>
+    <span>Position</span>
+    <span>X: <b><span id="cursorX"></span></b></span>
+    <span>Y: <b><span id="cursorY"></span></b></span>
+    <br><br>
+
+    <span> Click button on <b>Run Emulation</b> change position mouse </span> <br><br>
+    
     <button id="runEmulationCursor">Run Emulation</button>
     <div id="mainDiv" class="mainDiv">
         <div class="circle hide" id="circle">
@@ -18,7 +25,7 @@
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
+    <script src="client.js"></script>
 </body>
 
 </html>

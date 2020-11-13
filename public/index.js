@@ -10,7 +10,7 @@ async function ajax(url) {
         });
         request.open("GET", url);
         request.send();
-        request.addEventListener("error", reject)
+        request.addEventListener("error", reject);
     });
 }
 

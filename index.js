@@ -15,33 +15,32 @@ const SERVER_PORT = 3001;
 app.use('/', routerPage);
 app.use(express.static("public"));
 
-io.on("connection", onNewWebsocketConnection);
+io.on("connection", ClientConnect);
 
 server.listen(SERVER_PORT, () => {
-    console.info(`Listening on port ${SERVER_PORT}.`);
+    console.info(`Server run on port: ${SERVER_PORT}.`);
 });
 
-/*let secondsSinceServerStarted = 0;
+let secondsSinceServerStarted = 0;
 setInterval(() => {
     secondsSinceServerStarted++;
-    io.emit("seconds", secondsSinceServerStarted);
-    io.emit("online", onlineClients.size);
-}, 1000);*/
+    io.emit('Stats', {Type: "Stats", data: {
+        secondOnStart:secondsSinceServerStarted, 
+        countVisuals: Visuals.size,
+        countClients: Clients.size}});
+}, 1000);
 
-function onNewWebsocketConnection(socket) {
-    console.info(`Socket ${socket.id} has connected.`);
-
+function ClientConnect(socket) {
     socket.on("disconnect", () => {
         AllMachine.delete(socket);
         Visuals.delete(socket);
         Clients.delete(socket);
-        console.info(`Socket ${socket.id} has disconnected.`);
         Visuals.forEach(Visual => {
             Visual.send({
                 Type: "DeleteCursore",
                 Client: socket.id
-            })
-        })
+            });
+        });
     });
 
     socket.on("mousePosition", position => {
@@ -49,24 +48,19 @@ function onNewWebsocketConnection(socket) {
             Visual.send({
                 Type: "RenderCursor",
                 Clients: position
-            })
-        })
-        console.info(`Socket ${socket.id} says: "${JSON.stringify(position)}"`);
+            });
+        });
     });
 
     socket.on("hello", helloMsg => {
-        console.info(`Socket ${socket.id} says: "${JSON.stringify(helloMsg)}"`);
         if (helloMsg.Type == 'Client') {
             Clients.add(socket);
         } else if (helloMsg.Type == 'Visual') {
             Visuals.add(socket);
         } else {
-            socket.emit("WhoAreYou", "Send me you type Client or Visual!");
+            socket.emit("error", {errorMessage: "I'm don't who you! Send me Client or Visual on you type"});
         }
         AllMachine.add(socket);
     });
-
-
-
-    socket.emit("ID", socket.id);
+    socket.emit("ID", {message: "Hello!", id: socket.id});
 }
